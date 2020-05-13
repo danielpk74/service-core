@@ -10,11 +10,12 @@ import (
 
 	"github.com/danielpk74/service-core/utils/console"
 	jwt "github.com/dgrijalva/jwt-go"
+	"github.com/google/uuid"
 )
 
 var API_SECRET = os.Getenv("API_SECRET")
 
-func CreateToken(user_id uint32) (string, error) {
+func CreateToken(user_id uuid.UUID) (string, error) {
 	claims := jwt.MapClaims{}
 	claims["authorized"] = true
 	claims["user_id"] = user_id
