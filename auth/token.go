@@ -20,7 +20,7 @@ func CreateToken(user_id uint32) (string, error) {
 	claims["user_id"] = user_id
 	claims["exp"] = time.Now().Add(time.Hour * 1).Unix()
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	return token.SignedString()
+	return token.SignedString(API_SECRET)
 }
 
 func ValidateToken(tokenString string) error {
