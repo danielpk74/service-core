@@ -12,7 +12,7 @@ import (
 	jwt "github.com/dgrijalva/jwt-go"
 )
 
-var API_SECRET := os.Getenv("API_SECRET")
+var API_SECRET = os.Getenv("API_SECRET")
 
 func CreateToken(user_id uint32) (string, error) {
 	claims := jwt.MapClaims{}
