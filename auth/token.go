@@ -3,6 +3,7 @@ package auth
 import (
 	"fmt"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 	"time"
@@ -11,13 +12,15 @@ import (
 	jwt "github.com/dgrijalva/jwt-go"
 )
 
+var API_SECRET := os.Getenv("API_SECRET")
+
 func CreateToken(user_id uint32) (string, error) {
 	claims := jwt.MapClaims{}
 	claims["authorized"] = true
 	claims["user_id"] = user_id
 	claims["exp"] = time.Now().Add(time.Hour * 1).Unix()
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	return token.SignedString(config.API_SECRET)
+	return token.SignedString()
 }
 
 func ValidateToken(tokenString string) error {
@@ -28,7 +31,7 @@ func ValidateToken(tokenString string) error {
 		}
 
 		// hmacSampleSecret is a []byte containing your secret, e.g. []byte("my_secret_key")
-		return config.API_SECRET, nil
+		return API_SECRET, nil
 	})
 
 	if err != nil {
@@ -65,7 +68,7 @@ func ExtractTokenID(tokenString string) (uint32, error) {
 		}
 
 		// hmacSampleSecret is a []byte containing your secret, e.g. []byte("my_secret_key")
-		return config.API_SECRET, nil
+		return API_SECRET, nil
 	})
 
 	if err != nil {
