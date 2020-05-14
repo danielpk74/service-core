@@ -13,7 +13,7 @@ import (
 	"github.com/google/uuid"
 )
 
-var API_SECRET = os.Getenv("API_SECRET")
+var API_SECRET = []byte(os.Getenv("API_SECRET"))
 
 func CreateToken(user_id uuid.UUID) (string, error) {
 	claims := jwt.MapClaims{}
